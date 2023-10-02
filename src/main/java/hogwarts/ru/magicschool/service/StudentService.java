@@ -1,8 +1,14 @@
 package hogwarts.ru.magicschool.service;
 
-import hogwarts.ru.magicschool.Entity.Student;
-import hogwarts.ru.magicschool.exception.ElementWithThatIdAlreadyExist;
+import hogwarts.ru.magicschool.dto.FacultyDtoOut;
+import hogwarts.ru.magicschool.dto.StudentDtoIn;
+import hogwarts.ru.magicschool.dto.StudentDtoOut;
+import hogwarts.ru.magicschool.entity.Student;
+import hogwarts.ru.magicschool.exception.FacultyNotFoundException;
 import hogwarts.ru.magicschool.exception.StudentNotFoundException;
+import hogwarts.ru.magicschool.mapper.FacultyMapper;
+import hogwarts.ru.magicschool.mapper.StudentMapper;
+import hogwarts.ru.magicschool.repository.FacultyRepository;
 import hogwarts.ru.magicschool.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,41 +18,60 @@ import java.util.Collection;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+    private final FacultyRepository facultyRepository;
+    private final StudentMapper studentMapper;
+    private final FacultyMapper facultyMapper;
 
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository, FacultyRepository facultyRepository, StudentMapper studentMapper, FacultyMapper facultyMapper) {
         this.studentRepository = studentRepository;
+        this.facultyRepository = facultyRepository;
+        this.studentMapper = studentMapper;
+        this.facultyMapper = facultyMapper;
     }
 
 
-    public Student createStudent(Student student) {
-        if (studentRepository.existsById(student.getId())) {
-            throw new ElementWithThatIdAlreadyExist(student.getId(), "Student");
-        }
-        return studentRepository.save(student);
+    public StudentDtoOut createStudent(StudentDtoIn studentDtoIn) {
+        return studentMapper.toDto(studentRepository.save(studentMapper.toEntity(studentDtoIn)));
     }
 
-    public Student getStudent(Long id) {
-        return studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
+    public StudentDtoOut getStudent(Long id) {
+        return studentMapper.toDto(studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id)));
     }
 
-    public Collection<Student> getAllStudents() {
-        return studentRepository.findAll();
+    public Collection<StudentDtoOut> getAllStudents() {
+        return studentRepository.findAll().stream()
+                .map(studentMapper::toDto)
+                .toList();
     }
 
-    public Student editStudent(Student student) {
-        if (!studentRepository.existsById(student.getId())) {
-            throw new StudentNotFoundException(student.getId());
-        }
-        return studentRepository.save(student);
+    public StudentDtoOut editStudent(Long id, StudentDtoIn studentDtoIn) {
+        Student oldStudent = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
+        oldStudent.setName(studentDtoIn.getName());
+        oldStudent.setAge(studentDtoIn.getAge());
+        oldStudent.setFaculty(facultyRepository.findById(studentDtoIn.getFacultyId())
+                .orElseThrow(() -> new FacultyNotFoundException(studentDtoIn.getFacultyId())));
+        return studentMapper.toDto(studentRepository.save(oldStudent));
     }
 
-    public Student removeStudent(Long id) {
+    public StudentDtoOut removeStudent(Long id) {
         Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
         studentRepository.delete(student);
-        return student;
+        return studentMapper.toDto(student);
     }
 
-    public Collection<Student> getStudentsByAge(int age) {
-        return studentRepository.findByAge(age);
+    public Collection<StudentDtoOut> getStudentsByAgeBetween(int minAge, int maxAge) {
+        return studentRepository.findByAgeBetween(minAge, maxAge).stream()
+                .map(studentMapper::toDto)
+                .toList();
+    }
+
+    public Collection<StudentDtoOut> getStudentsByAge(int age) {
+        return studentRepository.findByAge(age).stream()
+                .map(studentMapper::toDto)
+                .toList();
+    }
+
+    public FacultyDtoOut getFacultyByStudentId(Long id) {
+        return facultyMapper.toDto(studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id)).getFaculty());
     }
 }

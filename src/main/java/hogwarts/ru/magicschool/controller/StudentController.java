@@ -1,6 +1,8 @@
 package hogwarts.ru.magicschool.controller;
 
-import hogwarts.ru.magicschool.Entity.Student;
+import hogwarts.ru.magicschool.dto.FacultyDtoOut;
+import hogwarts.ru.magicschool.dto.StudentDtoIn;
+import hogwarts.ru.magicschool.dto.StudentDtoOut;
 import hogwarts.ru.magicschool.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,30 +20,39 @@ public class StudentController {
 
 
     @PostMapping
-    public Student createStudent(@RequestBody Student student) {
-        return studentService.createStudent(student);
+    public StudentDtoOut createStudent(@RequestBody StudentDtoIn studentDtoIn) {
+        return studentService.createStudent(studentDtoIn);
     }
 
     @GetMapping("{id}")
-    public Student getStudent(@PathVariable Long id) {
+    public StudentDtoOut getStudent(@PathVariable Long id) {
         return studentService.getStudent(id);
     }
 
     @GetMapping
-    public Collection<Student> getStudents(@RequestParam(required = false) Integer age) {
-        if (age != null) {
+    public Collection<StudentDtoOut> getStudents(@RequestParam(required = false) Integer minAge,
+                                                 @RequestParam(required = false) Integer maxAge,
+                                                 @RequestParam(required = false) Integer age) {
+        if (minAge != null && maxAge != null) {
+            return studentService.getStudentsByAgeBetween(minAge, maxAge);
+        } else if (age != null) {
             return studentService.getStudentsByAge(age);
         }
         return studentService.getAllStudents();
     }
 
-    @PutMapping
-    public Student editStudent(@RequestBody Student student) {
-        return studentService.editStudent(student);
+    @GetMapping("{id}/faculty")
+    public FacultyDtoOut getFacultyByStudentId(@PathVariable Long id) {
+        return studentService.getFacultyByStudentId(id);
+    }
+
+    @PutMapping("{id}")
+    public StudentDtoOut editStudent(@PathVariable Long id, @RequestBody StudentDtoIn studentDtoIn) {
+        return studentService.editStudent(id, studentDtoIn);
     }
 
     @DeleteMapping("{id}")
-    public Student removeStudent(@PathVariable Long id) {
+    public StudentDtoOut removeStudent(@PathVariable Long id) {
         return studentService.removeStudent(id);
     }
 }

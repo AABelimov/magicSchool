@@ -13,7 +13,7 @@ public class SchoolExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
-    @ExceptionHandler({ElementWithThatIdAlreadyExist.class})
+    @ExceptionHandler({FacultyAlreadyExistException.class})
     public ResponseEntity<?> handleBadRequest(RuntimeException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
