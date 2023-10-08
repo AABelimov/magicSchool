@@ -6,13 +6,8 @@ public class StudentDtoIn {
     private int age;
     private Long facultyId;
 
-    public StudentDtoIn(String name, int age, Long facultyId) {
-        this.name = name;
-        this.age = age;
-        this.facultyId = facultyId;
-    }
-
     public StudentDtoIn() {
+
     }
 
 

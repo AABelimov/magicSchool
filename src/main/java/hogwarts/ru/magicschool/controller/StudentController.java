@@ -4,8 +4,11 @@ import hogwarts.ru.magicschool.dto.FacultyDtoOut;
 import hogwarts.ru.magicschool.dto.StudentDtoIn;
 import hogwarts.ru.magicschool.dto.StudentDtoOut;
 import hogwarts.ru.magicschool.service.StudentService;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Collection;
 
 @RestController
@@ -54,5 +57,14 @@ public class StudentController {
     @DeleteMapping("{id}")
     public StudentDtoOut removeStudent(@PathVariable Long id) {
         return studentService.removeStudent(id);
+    }
+
+    @PatchMapping(value = "{id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public StudentDtoOut uploadAvatar(@PathVariable Long id, @RequestParam MultipartFile avatar) {
+        try {
+            return studentService.uploadAvatar(id, avatar);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

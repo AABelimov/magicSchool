@@ -6,13 +6,8 @@ public class FacultyDtoOut {
     private String name;
     private String color;
 
-    public FacultyDtoOut(Long id, String name, String color) {
-        this.id = id;
-        this.name = name;
-        this.color = color;
-    }
-
     public FacultyDtoOut() {
+
     }
 
 

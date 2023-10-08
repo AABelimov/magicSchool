@@ -5,12 +5,8 @@ public class FacultyDtoIn {
     private String name;
     private String color;
 
-    public FacultyDtoIn(String name, String color) {
-        this.name = name;
-        this.color = color;
-    }
-
     public FacultyDtoIn() {
+
     }
 
 
