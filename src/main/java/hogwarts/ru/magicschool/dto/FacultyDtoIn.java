@@ -9,6 +9,11 @@ public class FacultyDtoIn {
 
     }
 
+    public FacultyDtoIn(String name, String color) {
+        this.name = name;
+        this.color = color;
+    }
+
 
     public String getName() {
         return name;

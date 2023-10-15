@@ -1,5 +1,7 @@
 package hogwarts.ru.magicschool.dto;
 
+import java.util.Objects;
+
 public class StudentDtoOut {
 
     private Long id;
@@ -8,6 +10,17 @@ public class StudentDtoOut {
     private FacultyDtoOut faculty;
     private String avatarUrl;
 
+    public StudentDtoOut() {
+
+    }
+
+    public StudentDtoOut(Long id, String name, int age, FacultyDtoOut faculty, String avatarUrl) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.faculty = faculty;
+        this.avatarUrl = avatarUrl;
+    }
 
     public Long getId() {
         return id;
@@ -47,5 +60,18 @@ public class StudentDtoOut {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StudentDtoOut that = (StudentDtoOut) o;
+        return age == that.age && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(faculty, that.faculty) && Objects.equals(avatarUrl, that.avatarUrl);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, age, faculty, avatarUrl);
     }
 }

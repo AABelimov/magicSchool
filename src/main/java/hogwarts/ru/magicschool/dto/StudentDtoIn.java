@@ -10,6 +10,11 @@ public class StudentDtoIn {
 
     }
 
+    public StudentDtoIn(String name, int age, Long facultyId) {
+        this.name = name;
+        this.age = age;
+        this.facultyId = facultyId;
+    }
 
     public String getName() {
         return name;
