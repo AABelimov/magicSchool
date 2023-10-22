@@ -3,8 +3,8 @@ package hogwarts.ru.magicschool.service;
 import hogwarts.ru.magicschool.entity.Avatar;
 import hogwarts.ru.magicschool.entity.Student;
 import hogwarts.ru.magicschool.repository.AvatarRepository;
-import hogwarts.ru.magicschool.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
@@ -55,5 +56,12 @@ public class AvatarService {
 
     public Avatar findById(Long id) {
         return avatarRepository.findById(id).orElseThrow();
+    }
+
+    public Collection<String> getAvatars(Integer page, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(page - 1, pageSize);
+        return avatarRepository.findAll(pageRequest).getContent().stream()
+                .map(e -> "/avatar/" + e.getId() + "/avatar-from-db")
+                .toList();
     }
 }

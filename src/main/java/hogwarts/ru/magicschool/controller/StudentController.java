@@ -49,6 +49,21 @@ public class StudentController {
         return studentService.getFacultyByStudentId(id);
     }
 
+    @GetMapping("count")
+    public Long getNumberOfAllStudents() {
+        return studentService.getNumberOfAllStudents();
+    }
+
+    @GetMapping("average-age")
+    public Double getAverageAgeOfStudents() {
+        return studentService.getAverageAgeOfStudents();
+    }
+
+    @GetMapping("five-last")
+    public Collection<StudentDtoOut> getLastFiveStudents() {
+        return studentService.getLastFiveStudents();
+    }
+
     @PutMapping("{id}")
     public StudentDtoOut editStudent(@PathVariable Long id, @RequestBody StudentDtoIn studentDtoIn) {
         return studentService.editStudent(id, studentDtoIn);

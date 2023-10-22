@@ -89,4 +89,18 @@ public class StudentService {
         studentDtoOut.setAvatarUrl("/avatar/" + avatar.getId() + "/avatar-from-db");
         return studentDtoOut;
     }
+
+    public Long getNumberOfAllStudents() {
+        return studentRepository.getNumberOfAllStudents();
+    }
+
+    public Double getAverageAgeOfStudents() {
+        return studentRepository.getAverageAgeOfStudents();
+    }
+
+    public Collection<StudentDtoOut> getLastFiveStudents() {
+        return studentRepository.getLastFiveStudents().stream()
+                .map(studentMapper::toDto)
+                .toList();
+    }
 }
