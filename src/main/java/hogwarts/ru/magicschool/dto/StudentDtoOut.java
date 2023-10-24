@@ -8,18 +8,18 @@ public class StudentDtoOut {
     private String name;
     private int age;
     private FacultyDtoOut faculty;
-    private String avatarUrl;
+    private AvatarDto avatar;
 
     public StudentDtoOut() {
 
     }
 
-    public StudentDtoOut(Long id, String name, int age, FacultyDtoOut faculty, String avatarUrl) {
+    public StudentDtoOut(Long id, String name, int age, FacultyDtoOut faculty, AvatarDto avatar) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.faculty = faculty;
-        this.avatarUrl = avatarUrl;
+        this.avatar = avatar;
     }
 
     public Long getId() {
@@ -54,12 +54,12 @@ public class StudentDtoOut {
         this.faculty = faculty;
     }
 
-    public String getAvatarUrl() {
-        return avatarUrl;
+    public AvatarDto getAvatar() {
+        return avatar;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+    public void setAvatar(AvatarDto avatar) {
+        this.avatar = avatar;
     }
 
     @Override
@@ -67,11 +67,11 @@ public class StudentDtoOut {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StudentDtoOut that = (StudentDtoOut) o;
-        return age == that.age && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(faculty, that.faculty) && Objects.equals(avatarUrl, that.avatarUrl);
+        return age == that.age && Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(faculty, that.faculty) && Objects.equals(avatar, that.avatar);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, age, faculty, avatarUrl);
+        return Objects.hash(id, name, age, faculty, avatar);
     }
 }

@@ -3,7 +3,6 @@ package hogwarts.ru.magicschool.service;
 import hogwarts.ru.magicschool.dto.FacultyDtoOut;
 import hogwarts.ru.magicschool.dto.StudentDtoIn;
 import hogwarts.ru.magicschool.dto.StudentDtoOut;
-import hogwarts.ru.magicschool.entity.Avatar;
 import hogwarts.ru.magicschool.entity.Student;
 import hogwarts.ru.magicschool.exception.FacultyNotFoundException;
 import hogwarts.ru.magicschool.exception.StudentNotFoundException;
@@ -83,11 +82,9 @@ public class StudentService {
     public StudentDtoOut uploadAvatar(Long id, MultipartFile multipartFile) throws IOException {
         Student student = studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
 
-        Avatar avatar = avatarService.createAvatar(student, multipartFile);
+        avatarService.createAvatar(student, multipartFile);
 
-        StudentDtoOut studentDtoOut = studentMapper.toDto(student);
-        studentDtoOut.setAvatarUrl("/avatar/" + avatar.getId() + "/avatar-from-db");
-        return studentDtoOut;
+        return studentMapper.toDto(student);
     }
 
     public Long getNumberOfAllStudents() {

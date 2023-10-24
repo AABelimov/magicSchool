@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import hogwarts.ru.magicschool.dto.StudentDtoOut;
 import hogwarts.ru.magicschool.entity.Faculty;
 import hogwarts.ru.magicschool.entity.Student;
+import hogwarts.ru.magicschool.mapper.AvatarMapper;
 import hogwarts.ru.magicschool.mapper.FacultyMapper;
 import hogwarts.ru.magicschool.mapper.StudentMapper;
 import hogwarts.ru.magicschool.repository.AvatarRepository;
@@ -52,6 +53,8 @@ public class FacultyControllerWithMockTest {
     FacultyMapper facultyMapper;
     @SpyBean
     StudentMapper studentMapper;
+    @SpyBean
+    AvatarMapper avatarMapper;
 
     @Autowired
     ObjectMapper objectMapper;

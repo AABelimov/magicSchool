@@ -1,5 +1,6 @@
 package hogwarts.ru.magicschool.controller;
 
+import hogwarts.ru.magicschool.dto.AvatarDto;
 import hogwarts.ru.magicschool.entity.Avatar;
 import hogwarts.ru.magicschool.service.AvatarService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -52,7 +53,7 @@ public class AvatarController {
     }
 
     @GetMapping()
-    public Collection<String> getAllAvatars(@RequestParam Integer page, Integer pageSize) {
+    public Collection<AvatarDto> getAllAvatars(@RequestParam Integer page, Integer pageSize) {
         return avatarService.getAvatars(page, pageSize);
     }
 }

@@ -12,11 +12,13 @@ import org.springframework.stereotype.Component;
 public class StudentMapper {
 
     private final FacultyMapper facultyMapper;
+    private final AvatarMapper avatarMapper;
     private final FacultyRepository facultyRepository;
     private final AvatarRepository avatarRepository;
 
-    public StudentMapper(FacultyMapper facultyMapper, FacultyRepository facultyRepository, AvatarRepository avatarRepository) {
+    public StudentMapper(FacultyMapper facultyMapper, AvatarMapper avatarMapper, FacultyRepository facultyRepository, AvatarRepository avatarRepository) {
         this.facultyMapper = facultyMapper;
+        this.avatarMapper = avatarMapper;
         this.facultyRepository = facultyRepository;
         this.avatarRepository = avatarRepository;
     }
@@ -28,7 +30,7 @@ public class StudentMapper {
         studentDtoOut.setName(student.getName());
         studentDtoOut.setAge(student.getAge());
         studentDtoOut.setFaculty(facultyMapper.toDto(student.getFaculty()));
-        avatarRepository.findByStudent_Id(student.getId()).ifPresent(avatar -> studentDtoOut.setAvatarUrl("/avatar/" + avatar.getId() + "/avatar-from-db"));
+        avatarRepository.findByStudent_Id(student.getId()).ifPresent(avatar -> studentDtoOut.setAvatar(avatarMapper.toDto(avatar)));
         return studentDtoOut;
     }
 
