@@ -10,11 +10,13 @@ import hogwarts.ru.magicschool.mapper.FacultyMapper;
 import hogwarts.ru.magicschool.mapper.StudentMapper;
 import hogwarts.ru.magicschool.repository.FacultyRepository;
 import hogwarts.ru.magicschool.repository.StudentRepository;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class StudentService {
@@ -87,16 +89,16 @@ public class StudentService {
         return studentMapper.toDto(student);
     }
 
-    public Long getNumberOfAllStudents() {
-        return studentRepository.getNumberOfAllStudents();
+    public Long getCountOfStudents() {
+        return studentRepository.getCountOfStudents();
     }
 
     public Double getAverageAgeOfStudents() {
         return studentRepository.getAverageAgeOfStudents();
     }
 
-    public Collection<StudentDtoOut> getLastFiveStudents() {
-        return studentRepository.getLastFiveStudents().stream()
+    public List<StudentDtoOut> getLastStudents(int amount) {
+        return studentRepository.getLastStudents(Pageable.ofSize(amount)).stream()
                 .map(studentMapper::toDto)
                 .toList();
     }

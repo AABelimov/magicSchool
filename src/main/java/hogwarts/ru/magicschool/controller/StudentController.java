@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("student")
@@ -50,8 +51,8 @@ public class StudentController {
     }
 
     @GetMapping("count")
-    public Long getNumberOfAllStudents() {
-        return studentService.getNumberOfAllStudents();
+    public Long getCountOfStudents() {
+        return studentService.getCountOfStudents();
     }
 
     @GetMapping("average-age")
@@ -59,9 +60,9 @@ public class StudentController {
         return studentService.getAverageAgeOfStudents();
     }
 
-    @GetMapping("five-last")
-    public Collection<StudentDtoOut> getLastFiveStudents() {
-        return studentService.getLastFiveStudents();
+    @GetMapping("last-students")
+    public List<StudentDtoOut> getLastStudents(@RequestParam(value = "amount", defaultValue = "5") int amount) {
+        return studentService.getLastStudents(amount);
     }
 
     @PutMapping("{id}")
