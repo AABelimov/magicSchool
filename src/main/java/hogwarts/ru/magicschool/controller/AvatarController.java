@@ -30,7 +30,7 @@ public class AvatarController {
 
     @GetMapping("{id}/avatar-from-db")
     public ResponseEntity<byte[]> downloadAvatar(@PathVariable Long id) {
-        Avatar avatar = avatarService.findById(id);
+        Avatar avatar = avatarService.getAvatarById(id);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
         headers.setContentLength(avatar.getData().length);
@@ -39,7 +39,7 @@ public class AvatarController {
 
     @GetMapping("{id}/avatar-from-file")
     public void downloadAvatar(@PathVariable Long id, HttpServletResponse response) throws IOException {
-        Avatar avatar = avatarService.findById(id);
+        Avatar avatar = avatarService.getAvatarById(id);
         Path path = Path.of(avatar.getFilePath());
         try (
                 InputStream is = Files.newInputStream(path);
