@@ -1,6 +1,6 @@
 package hogwarts.ru.magicschool.exception;
 
-public class StudentNotFoundException extends RuntimeException {
+public class StudentNotFoundException extends NotFoundException {
 
     private final long id;
 

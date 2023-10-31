@@ -2,6 +2,7 @@ package hogwarts.ru.magicschool.constants;
 
 import hogwarts.ru.magicschool.dto.StudentDtoIn;
 import hogwarts.ru.magicschool.dto.StudentDtoOut;
+import hogwarts.ru.magicschool.entity.Student;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,26 +32,42 @@ public class StudentsConstantsForTests {
     public static final StudentDtoOut STUDENT_DTO_OUT_2 = new StudentDtoOut(STUDENT_ID_2, STUDENT_NAME_2, STUDENT_AGE_2, FACULTY_DTO_OUT_2, null);
     public static final StudentDtoOut STUDENT_DTO_OUT_3 = new StudentDtoOut(STUDENT_ID_3, STUDENT_NAME_3, STUDENT_AGE_1, FACULTY_DTO_OUT_1, null);
     public static final StudentDtoOut STUDENT_DTO_OUT_3_EDIT = new StudentDtoOut(STUDENT_ID_3, STUDENT_NAME_EDIT, STUDENT_AGE_EDIT, FACULTY_DTO_OUT_4, null);
-    public static final Collection<StudentDtoOut> STUDENTS_FROM_FACULTY_1 = new ArrayList<>(List.of(
+    public static final Student STUDENT_1 = new Student(STUDENT_ID_1, STUDENT_NAME_1, STUDENT_AGE_1, FACULTY_1);
+    public static final Student STUDENT_2 = new Student(STUDENT_ID_2, STUDENT_NAME_2, STUDENT_AGE_2, FACULTY_2);
+    public static final Student STUDENT_3 = new Student(STUDENT_ID_3, STUDENT_NAME_3, STUDENT_AGE_1, FACULTY_1);
+    public static final List<StudentDtoOut> STUDENT_DTO_OUT_WITH_FACULTY_1 = new ArrayList<>(List.of(
             STUDENT_DTO_OUT_1,
             STUDENT_DTO_OUT_3
     ));
-    public static final Collection<StudentDtoOut> ALL_STUDENTS = new ArrayList<>(List.of(
+    public static final List<StudentDtoOut> ALL_STUDENT_DTO_OUT = new ArrayList<>(List.of(
             STUDENT_DTO_OUT_1,
             STUDENT_DTO_OUT_2,
             STUDENT_DTO_OUT_3
     ));
-    public static final Collection<StudentDtoOut> ALL_STUDENTS_AFTER_EDIT = new ArrayList<>(List.of(
+    public static final Collection<StudentDtoOut> ALL_STUDENT_DTO_OUT_AFTER_EDIT = new ArrayList<>(List.of(
             STUDENT_DTO_OUT_1,
             STUDENT_DTO_OUT_2,
             STUDENT_DTO_OUT_3_EDIT
     ));
-    public static final Collection<StudentDtoOut> ALL_STUDENTS_AFTER_REMOVE = new ArrayList<>(List.of(
+    public static final Collection<StudentDtoOut> ALL_STUDENT_DTO_OUT_AFTER_REMOVE = new ArrayList<>(List.of(
             STUDENT_DTO_OUT_1,
             STUDENT_DTO_OUT_3_EDIT
     ));
-    public static final Collection<StudentDtoOut> STUDENTS_WITH_AGE_1 = new ArrayList<>(List.of(
+    public static final List<StudentDtoOut> STUDENT_DTO_OUT_WITH_AGE_1 = new ArrayList<>(List.of(
             STUDENT_DTO_OUT_1,
             STUDENT_DTO_OUT_3
+    ));
+    public static final List<Student> ALL_STUDENTS = new ArrayList<>(List.of(
+            STUDENT_1,
+            STUDENT_2,
+            STUDENT_3
+    ));
+    public static final List<Student> STUDENTS_WITH_AGE_1 = new ArrayList<>(List.of(
+            STUDENT_1,
+            STUDENT_3
+    ));
+    public static final List<Student> STUDENTS_FROM_FACULTY_1 = new ArrayList<>(List.of(
+            STUDENT_1,
+            STUDENT_3
     ));
 }

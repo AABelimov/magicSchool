@@ -3,6 +3,7 @@ package hogwarts.ru.magicschool.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "avatars")
 public class Avatar {
 
     @Id
@@ -11,6 +12,8 @@ public class Avatar {
     private String filePath;
     private long fileSize;
     private String mediaType;
+
+    @Lob
     private byte[] data;
 
     @OneToOne

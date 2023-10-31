@@ -85,14 +85,14 @@ public class StudentControllerWithRestTemplateTest {
     void testGetStudents() throws JsonProcessingException {
 
         Collection<?> answer = restTemplate.getForObject("http://localhost:" + port + "/student", Collection.class);
-        String expected = objectMapper.writeValueAsString(ALL_STUDENTS);
+        String expected = objectMapper.writeValueAsString(ALL_STUDENT_DTO_OUT);
         String actual = objectMapper.writeValueAsString(answer);
 
         assertEquals(expected, actual);
 
 
         answer = restTemplate.getForObject("http://localhost:" + port + "/student?minAge=" + STUDENT_AGE_1 + "&maxAge=" + STUDENT_AGE_1, Collection.class);
-        expected = objectMapper.writeValueAsString(STUDENTS_WITH_AGE_1);
+        expected = objectMapper.writeValueAsString(STUDENT_DTO_OUT_WITH_AGE_1);
         actual = objectMapper.writeValueAsString(answer);
 
         assertEquals(expected, actual);
@@ -122,7 +122,7 @@ public class StudentControllerWithRestTemplateTest {
         assertEquals(STUDENT_DTO_OUT_3_EDIT, responseEntity.getBody());
 
 
-        String expectedListAfterEdit = objectMapper.writeValueAsString(ALL_STUDENTS_AFTER_EDIT);
+        String expectedListAfterEdit = objectMapper.writeValueAsString(ALL_STUDENT_DTO_OUT_AFTER_EDIT);
         Collection<?> answer = restTemplate.getForObject("http://localhost:" + port + "/student", Collection.class);
         String actualListAfterEdit = objectMapper.writeValueAsString(answer);
 
@@ -153,7 +153,7 @@ public class StudentControllerWithRestTemplateTest {
         assertEquals(STUDENT_DTO_OUT_2, responseEntity.getBody());
 
 
-        String expectedListAfterRemove = objectMapper.writeValueAsString(ALL_STUDENTS_AFTER_REMOVE);
+        String expectedListAfterRemove = objectMapper.writeValueAsString(ALL_STUDENT_DTO_OUT_AFTER_REMOVE);
         Collection<?> answer = restTemplate.getForObject("http://localhost:" + port + "/student", Collection.class);
         String actualListAfterRemove = objectMapper.writeValueAsString(answer);
 

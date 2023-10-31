@@ -1,9 +1,6 @@
 package hogwarts.ru.magicschool.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hogwarts.ru.magicschool.dto.StudentDtoOut;
-import hogwarts.ru.magicschool.entity.Faculty;
-import hogwarts.ru.magicschool.entity.Student;
 import hogwarts.ru.magicschool.mapper.AvatarMapper;
 import hogwarts.ru.magicschool.mapper.FacultyMapper;
 import hogwarts.ru.magicschool.mapper.StudentMapper;
@@ -22,8 +19,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static hogwarts.ru.magicschool.constants.FacultyConstantsForTests.*;
@@ -68,18 +63,8 @@ public class StudentControllerWithMockTest {
     @Test
     void testCreateStudent() throws Exception {
 
-        Student student = new Student();
-        Faculty faculty = new Faculty();
-        faculty.setId(FACULTY_ID_1);
-        faculty.setName(FACULTY_NAME_1);
-        faculty.setColor(FACULTY_COLOR_1);
-        student.setId(STUDENT_ID_1);
-        student.setName(STUDENT_NAME_1);
-        student.setAge(STUDENT_AGE_1);
-        student.setFaculty(faculty);
-
-        when(studentRepository.save(eq(student))).thenReturn(student);
-        when(facultyRepository.findById(STUDENT_ID_1)).thenReturn(Optional.of(faculty));
+        when(studentRepository.save(eq(STUDENT_1))).thenReturn(STUDENT_1);
+        when(facultyRepository.findById(STUDENT_ID_1)).thenReturn(Optional.of(FACULTY_1));
 
         mockMvc.perform(
                         MockMvcRequestBuilders
@@ -114,17 +99,7 @@ public class StudentControllerWithMockTest {
     @Test
     void testGetStudent() throws Exception {
 
-        Student student = new Student();
-        Faculty faculty = new Faculty();
-        faculty.setId(FACULTY_ID_2);
-        faculty.setName(FACULTY_NAME_2);
-        faculty.setColor(FACULTY_COLOR_2);
-        student.setId(STUDENT_ID_2);
-        student.setName(STUDENT_NAME_2);
-        student.setAge(STUDENT_AGE_2);
-        student.setFaculty(faculty);
-
-        when(studentRepository.findById(eq(STUDENT_ID_2))).thenReturn(Optional.of(student));
+        when(studentRepository.findById(eq(STUDENT_ID_2))).thenReturn(Optional.of(STUDENT_2));
 
         mockMvc.perform(
                         MockMvcRequestBuilders
@@ -153,40 +128,9 @@ public class StudentControllerWithMockTest {
     @Test
     void testGetStudents() throws Exception {
 
-        Faculty faculty1 = facultyMapper.toEntity(FACULTY_DTO_IN_1);
-        faculty1.setId(FACULTY_ID_1);
-        Faculty faculty2 = facultyMapper.toEntity(FACULTY_DTO_IN_2);
-        faculty2.setId(FACULTY_ID_2);
-        Student student1 = new Student();
-        student1.setId(STUDENT_ID_1);
-        student1.setName(STUDENT_NAME_1);
-        student1.setAge(STUDENT_AGE_1);
-        student1.setFaculty(faculty1);
-        Student student2 = new Student();
-        student2.setId(STUDENT_ID_2);
-        student2.setName(STUDENT_NAME_2);
-        student2.setAge(STUDENT_AGE_2);
-        student2.setFaculty(faculty2);
-        Student student3 = new Student();
-        student3.setId(STUDENT_ID_3);
-        student3.setName(STUDENT_NAME_3);
-        student3.setAge(STUDENT_AGE_1);
-        student3.setFaculty(faculty1);
-        List<Student> students = new ArrayList<>(List.of(
-                student1,
-                student2,
-                student3
-        ));
-        List<Student> studentsWithOneAge = new ArrayList<>(List.of(
-                student1,
-                student3
-        ));
-        List<StudentDtoOut> studentsDto = students.stream().map(e -> studentMapper.toDto(e)).toList();
-        List<StudentDtoOut> studentsWithOneAgeDto = studentsWithOneAge.stream().map(e -> studentMapper.toDto(e)).toList();
-
-        when(studentRepository.findAll()).thenReturn(students);
-        when(studentRepository.findByAge(eq(STUDENT_AGE_1))).thenReturn(studentsWithOneAge);
-        String expectedAllStudents = objectMapper.writeValueAsString(studentsDto);
+        when(studentRepository.findAll()).thenReturn(ALL_STUDENTS);
+        when(studentRepository.findByAge(eq(STUDENT_AGE_1))).thenReturn(STUDENTS_WITH_AGE_1);
+        String expectedAllStudents = objectMapper.writeValueAsString(ALL_STUDENT_DTO_OUT);
 
         mockMvc.perform(
                         MockMvcRequestBuilders
@@ -196,7 +140,7 @@ public class StudentControllerWithMockTest {
                 .andExpect(result -> assertEquals(expectedAllStudents, result.getResponse().getContentAsString()));
 
 
-        String expectedFacultiesWithOneAge = objectMapper.writeValueAsString(studentsWithOneAgeDto);
+        String expectedFacultiesWithOneAge = objectMapper.writeValueAsString(STUDENT_DTO_OUT_WITH_AGE_1);
 
         mockMvc.perform(
                         MockMvcRequestBuilders
@@ -209,17 +153,7 @@ public class StudentControllerWithMockTest {
     @Test
     void testGetFacultyByStudentId() throws Exception {
 
-        Student student = new Student();
-        Faculty faculty = new Faculty();
-        faculty.setId(FACULTY_ID_2);
-        faculty.setName(FACULTY_NAME_2);
-        faculty.setColor(FACULTY_COLOR_2);
-        student.setId(STUDENT_ID_2);
-        student.setName(STUDENT_NAME_2);
-        student.setAge(STUDENT_AGE_2);
-        student.setFaculty(faculty);
-
-        when(studentRepository.findById(eq(STUDENT_ID_2))).thenReturn(Optional.of(student));
+        when(studentRepository.findById(eq(STUDENT_ID_2))).thenReturn(Optional.of(STUDENT_2));
 
         mockMvc.perform(
                         MockMvcRequestBuilders
@@ -249,23 +183,9 @@ public class StudentControllerWithMockTest {
     @Test
     void testEditStudent() throws Exception {
 
-        Student student = new Student();
-        Faculty faculty = new Faculty();
-        faculty.setId(FACULTY_ID_1);
-        faculty.setName(FACULTY_NAME_1);
-        faculty.setColor(FACULTY_COLOR_1);
-        student.setId(STUDENT_ID_3);
-        student.setName(STUDENT_NAME_3);
-        student.setAge(STUDENT_AGE_1);
-        student.setFaculty(faculty);
-        Faculty newFaculty = new Faculty();
-        newFaculty.setId(FACULTY_ID_4);
-        newFaculty.setName(FACULTY_NAME_4);
-        newFaculty.setColor(FACULTY_COLOR_4);
-
-        when(studentRepository.findById(eq(STUDENT_ID_3))).thenReturn(Optional.of(student));
-        when(facultyRepository.findById(FACULTY_ID_4)).thenReturn(Optional.of(newFaculty));
-        when(studentRepository.save(eq(student))).thenReturn(student);
+        when(studentRepository.findById(eq(STUDENT_ID_3))).thenReturn(Optional.of(STUDENT_3));
+        when(facultyRepository.findById(FACULTY_ID_4)).thenReturn(Optional.of(FACULTY_4));
+        when(studentRepository.save(eq(STUDENT_3))).thenReturn(STUDENT_3);
 
         mockMvc.perform(
                         MockMvcRequestBuilders
@@ -299,17 +219,7 @@ public class StudentControllerWithMockTest {
     @Test
     void testRemoveStudent() throws Exception {
 
-        Student student = new Student();
-        Faculty faculty = new Faculty();
-        faculty.setId(FACULTY_ID_2);
-        faculty.setName(FACULTY_NAME_2);
-        faculty.setColor(FACULTY_COLOR_2);
-        student.setId(STUDENT_ID_2);
-        student.setName(STUDENT_NAME_2);
-        student.setAge(STUDENT_AGE_2);
-        student.setFaculty(faculty);
-
-        when(studentRepository.findById(eq(STUDENT_ID_2))).thenReturn(Optional.of(student));
+        when(studentRepository.findById(eq(STUDENT_ID_2))).thenReturn(Optional.of(STUDENT_2));
 
         mockMvc.perform(
                         MockMvcRequestBuilders

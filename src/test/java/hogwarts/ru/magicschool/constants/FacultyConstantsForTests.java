@@ -2,6 +2,7 @@ package hogwarts.ru.magicschool.constants;
 
 import hogwarts.ru.magicschool.dto.FacultyDtoIn;
 import hogwarts.ru.magicschool.dto.FacultyDtoOut;
+import hogwarts.ru.magicschool.entity.Faculty;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,25 +34,39 @@ public class FacultyConstantsForTests {
     public static final FacultyDtoOut FACULTY_DTO_OUT_3 = new FacultyDtoOut(FACULTY_ID_3, FACULTY_NAME_3, FACULTY_COLOR_1);
     public static final FacultyDtoOut FACULTY_DTO_OUT_4 = new FacultyDtoOut(FACULTY_ID_4, FACULTY_NAME_4, FACULTY_COLOR_4);
     public static final FacultyDtoOut FACULTY_DTO_OUT_3_EDIT = new FacultyDtoOut(FACULTY_ID_3, FACULTY_NAME_EDIT, FACULTY_COLOR_EDIT);
-    public static final Collection<FacultyDtoOut> ALL_FACULTIES = new ArrayList<>(List.of(
+    public static final Faculty FACULTY_1 = new Faculty(FACULTY_ID_1, FACULTY_NAME_1, FACULTY_COLOR_1);
+    public static final Faculty FACULTY_2 = new Faculty(FACULTY_ID_2, FACULTY_NAME_2, FACULTY_COLOR_2);
+    public static final Faculty FACULTY_3 = new Faculty(FACULTY_ID_3, FACULTY_NAME_3, FACULTY_COLOR_1);
+    public static final Faculty FACULTY_4 = new Faculty(FACULTY_ID_4, FACULTY_NAME_4, FACULTY_COLOR_4);
+    public static final Collection<FacultyDtoOut> ALL_FACULTY_DTO_OUT = new ArrayList<>(List.of(
             FACULTY_DTO_OUT_1,
             FACULTY_DTO_OUT_2,
             FACULTY_DTO_OUT_3,
             FACULTY_DTO_OUT_4
     ));
-    public static final Collection<FacultyDtoOut> ALL_FACULTIES_WITH_COLOR_1 = new ArrayList<>(List.of(
+    public static final Collection<FacultyDtoOut> ALL_FACULTY_DTO_OUT_WITH_COLOR_1 = new ArrayList<>(List.of(
             FACULTY_DTO_OUT_1,
             FACULTY_DTO_OUT_3
     ));
-    public static final Collection<FacultyDtoOut> ALL_FACULTIES_AFTER_EDIT = new ArrayList<>(List.of(
+    public static final Collection<FacultyDtoOut> ALL_FACULTY_DTO_OUT_AFTER_EDIT = new ArrayList<>(List.of(
             FACULTY_DTO_OUT_1,
             FACULTY_DTO_OUT_2,
             FACULTY_DTO_OUT_4,
             FACULTY_DTO_OUT_3_EDIT
     ));
-    public static final Collection<FacultyDtoOut> ALL_FACULTIES_AFTER_REMOVE = new ArrayList<>(List.of(
+    public static final Collection<FacultyDtoOut> ALL_FACULTY_DTO_OUT_AFTER_REMOVE = new ArrayList<>(List.of(
             FACULTY_DTO_OUT_1,
             FACULTY_DTO_OUT_4,
             FACULTY_DTO_OUT_3_EDIT
+    ));
+    public static final List<Faculty> ALL_FACULTIES = new ArrayList<>(List.of(
+            FACULTY_1,
+            FACULTY_2,
+            FACULTY_3,
+            FACULTY_4
+    ));
+    public static final List<Faculty> ALL_FACULTIES_WITH_COLOR_1 = new ArrayList<>(List.of(
+            FACULTY_1,
+            FACULTY_3
     ));
 }

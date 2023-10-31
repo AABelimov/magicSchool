@@ -1,9 +1,6 @@
 package hogwarts.ru.magicschool.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hogwarts.ru.magicschool.dto.StudentDtoOut;
-import hogwarts.ru.magicschool.entity.Faculty;
-import hogwarts.ru.magicschool.entity.Student;
 import hogwarts.ru.magicschool.mapper.AvatarMapper;
 import hogwarts.ru.magicschool.mapper.FacultyMapper;
 import hogwarts.ru.magicschool.mapper.StudentMapper;
@@ -21,8 +18,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static hogwarts.ru.magicschool.constants.FacultyConstantsForTests.*;
@@ -63,10 +58,7 @@ public class FacultyControllerWithMockTest {
     @Test
     void testCreateFaculty() throws Exception {
 
-        Faculty faculty = facultyMapper.toEntity(FACULTY_DTO_IN_1);
-        faculty.setId(FACULTY_ID_1);
-
-        when(facultyRepository.save(eq(faculty))).thenReturn(faculty);
+        when(facultyRepository.save(eq(FACULTY_1))).thenReturn(FACULTY_1);
 
         mockMvc.perform(
                         MockMvcRequestBuilders
@@ -80,7 +72,7 @@ public class FacultyControllerWithMockTest {
                 .andExpect(jsonPath("$.color").value(FACULTY_COLOR_1));
 
 
-        when(facultyRepository.findOneByNameAndColor(any(), any())).thenReturn(faculty);
+        when(facultyRepository.findOneByNameAndColor(any(), any())).thenReturn(FACULTY_1);
 
         mockMvc.perform(
                         MockMvcRequestBuilders
@@ -100,10 +92,7 @@ public class FacultyControllerWithMockTest {
     @Test
     void testGetFaculty() throws Exception {
 
-        Faculty faculty = facultyMapper.toEntity(FACULTY_DTO_IN_2);
-        faculty.setId(FACULTY_ID_2);
-
-        when(facultyRepository.findById(eq(FACULTY_ID_2))).thenReturn(Optional.of(faculty));
+        when(facultyRepository.findById(eq(FACULTY_ID_2))).thenReturn(Optional.of(FACULTY_2));
 
         mockMvc.perform(
                         MockMvcRequestBuilders
@@ -131,25 +120,9 @@ public class FacultyControllerWithMockTest {
     @Test
     void testGetFaculties() throws Exception {
 
-        Faculty faculty1 = facultyMapper.toEntity(FACULTY_DTO_IN_1);
-        faculty1.setId(FACULTY_ID_1);
-        Faculty faculty2 = facultyMapper.toEntity(FACULTY_DTO_IN_2);
-        faculty2.setId(FACULTY_ID_2);
-        Faculty faculty3 = facultyMapper.toEntity(FACULTY_DTO_IN_3);
-        faculty3.setId(FACULTY_ID_3);
-        List<Faculty> faculties = new ArrayList<>(List.of(
-                faculty1,
-                faculty2,
-                faculty3
-        ));
-        List<Faculty> facultiesWithOneColor = new ArrayList<>(List.of(
-                faculty1,
-                faculty3
-        ));
-
-        when(facultyRepository.findAll()).thenReturn(faculties);
-        when(facultyRepository.findByColorIgnoreCaseOrNameIgnoreCase(any(String.class), any(String.class))).thenReturn(facultiesWithOneColor);
-        String expectedAllFaculties = objectMapper.writeValueAsString(faculties);
+        when(facultyRepository.findAll()).thenReturn(ALL_FACULTIES);
+        when(facultyRepository.findByColorIgnoreCaseOrNameIgnoreCase(any(String.class), any(String.class))).thenReturn(ALL_FACULTIES_WITH_COLOR_1);
+        String expectedAllFaculties = objectMapper.writeValueAsString(ALL_FACULTIES);
 
         mockMvc.perform(
                         MockMvcRequestBuilders
@@ -158,7 +131,8 @@ public class FacultyControllerWithMockTest {
                 .andExpect(status().isOk())
                 .andExpect(result -> assertEquals(expectedAllFaculties, result.getResponse().getContentAsString()));
 
-        String expectedFacultiesByColor = objectMapper.writeValueAsString(facultiesWithOneColor);
+
+        String expectedFacultiesByColor = objectMapper.writeValueAsString(ALL_FACULTIES_WITH_COLOR_1);
 
         mockMvc.perform(
                         MockMvcRequestBuilders
@@ -171,23 +145,9 @@ public class FacultyControllerWithMockTest {
     @Test
     void testGetStudents() throws Exception {
 
-        Faculty faculty = facultyMapper.toEntity(FACULTY_DTO_IN_1);
-        faculty.setId(FACULTY_ID_1);
-
-        when(facultyRepository.findById(FACULTY_ID_1)).thenReturn(Optional.of(faculty));
-
-        Student student1 = studentMapper.toEntity(STUDENT_DTO_IN_1);
-        student1.setId(STUDENT_ID_1);
-        Student student3 = studentMapper.toEntity(STUDENT_DTO_IN_3);
-        student3.setId(STUDENT_ID_3);
-        List<Student> students = new ArrayList<>(List.of(
-                student1,
-                student3
-        ));
-        List<StudentDtoOut> studentsDto = students.stream().map(e -> studentMapper.toDto(e)).toList();
-        String expected = objectMapper.writeValueAsString(studentsDto);
-
-        when(studentRepository.findByFaculty_Id(FACULTY_ID_1)).thenReturn(students);
+        when(facultyRepository.findById(FACULTY_ID_1)).thenReturn(Optional.of(FACULTY_1));
+        when(studentRepository.findByFaculty_Id(FACULTY_ID_1)).thenReturn(STUDENTS_FROM_FACULTY_1);
+        String expected = objectMapper.writeValueAsString(STUDENT_DTO_OUT_WITH_FACULTY_1);
 
         mockMvc.perform(
                         MockMvcRequestBuilders
@@ -200,13 +160,8 @@ public class FacultyControllerWithMockTest {
     @Test
     void testEditFaculty() throws Exception {
 
-        Faculty faculty = new Faculty();
-        faculty.setId(FACULTY_ID_3);
-        faculty.setName(FACULTY_NAME_3);
-        faculty.setColor(FACULTY_COLOR_1);
-
-        when(facultyRepository.findById(any(Long.class))).thenReturn(Optional.of(faculty));
-        when(facultyRepository.save(eq(faculty))).thenReturn(faculty);
+        when(facultyRepository.findById(any(Long.class))).thenReturn(Optional.of(FACULTY_3));
+        when(facultyRepository.save(eq(FACULTY_3))).thenReturn(FACULTY_3);
 
         mockMvc.perform(
                         MockMvcRequestBuilders
@@ -239,12 +194,7 @@ public class FacultyControllerWithMockTest {
     @Test
     void testRemoveFaculty() throws Exception {
 
-        Faculty faculty = new Faculty();
-        faculty.setId(FACULTY_ID_1);
-        faculty.setName(FACULTY_NAME_1);
-        faculty.setColor(FACULTY_COLOR_1);
-
-        when(facultyRepository.findById(eq(FACULTY_ID_1))).thenReturn(Optional.of(faculty));
+        when(facultyRepository.findById(eq(FACULTY_ID_1))).thenReturn(Optional.of(FACULTY_1));
 
         mockMvc.perform(
                         MockMvcRequestBuilders

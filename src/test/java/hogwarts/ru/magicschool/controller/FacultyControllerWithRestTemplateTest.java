@@ -84,14 +84,14 @@ public class FacultyControllerWithRestTemplateTest {
     void testGetFaculties() throws JsonProcessingException {
 
         Collection<?> answer = restTemplate.getForObject("http://localhost:" + port + "/faculty", Collection.class);
-        String expected = objectMapper.writeValueAsString(ALL_FACULTIES);
+        String expected = objectMapper.writeValueAsString(ALL_FACULTY_DTO_OUT);
         String actual = objectMapper.writeValueAsString(answer);
 
         assertEquals(expected, actual);
 
 
         answer = restTemplate.getForObject("http://localhost:" + port + "/faculty?colorOrName=" + FACULTY_COLOR_1, Collection.class);
-        expected = objectMapper.writeValueAsString(ALL_FACULTIES_WITH_COLOR_1);
+        expected = objectMapper.writeValueAsString(ALL_FACULTY_DTO_OUT_WITH_COLOR_1);
         actual = objectMapper.writeValueAsString(answer);
 
         assertEquals(expected, actual);
@@ -101,7 +101,7 @@ public class FacultyControllerWithRestTemplateTest {
     void testGetStudents() throws JsonProcessingException {
 
         Collection<?> answer = restTemplate.getForObject("http://localhost:" + port + "/faculty/" + FACULTY_ID_1 + "/students", Collection.class);
-        String expected = objectMapper.writeValueAsString(STUDENTS_FROM_FACULTY_1);
+        String expected = objectMapper.writeValueAsString(STUDENT_DTO_OUT_WITH_FACULTY_1);
         String actual = objectMapper.writeValueAsString(answer);
 
         assertEquals(expected, actual);
@@ -120,7 +120,7 @@ public class FacultyControllerWithRestTemplateTest {
         assertEquals(FACULTY_DTO_OUT_3_EDIT, responseEntity.getBody());
 
 
-        String expectedListAfterEdit = objectMapper.writeValueAsString(ALL_FACULTIES_AFTER_EDIT);
+        String expectedListAfterEdit = objectMapper.writeValueAsString(ALL_FACULTY_DTO_OUT_AFTER_EDIT);
         Collection<?> answer = restTemplate.getForObject("http://localhost:" + port + "/faculty", Collection.class);
         String actualListAfterEdit = objectMapper.writeValueAsString(answer);
 
@@ -152,7 +152,7 @@ public class FacultyControllerWithRestTemplateTest {
         assertEquals(FACULTY_DTO_OUT_2, responseEntity.getBody());
 
 
-        String expectedListAfterRemove = objectMapper.writeValueAsString(ALL_FACULTIES_AFTER_REMOVE);
+        String expectedListAfterRemove = objectMapper.writeValueAsString(ALL_FACULTY_DTO_OUT_AFTER_REMOVE);
         Collection<?> answer = restTemplate.getForObject("http://localhost:" + port + "/faculty", Collection.class);
         String actualListAfterRemove = objectMapper.writeValueAsString(answer);
 

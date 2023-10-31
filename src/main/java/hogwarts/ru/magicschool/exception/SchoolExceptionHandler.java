@@ -15,13 +15,13 @@ public class SchoolExceptionHandler {
     @ExceptionHandler({FacultyNotFoundException.class,
             StudentNotFoundException.class,
             AvatarNotFoundException.class})
-    public ResponseEntity<?> handleNotFound(RuntimeException e) {
+    public ResponseEntity<?> handleNotFound(NotFoundException e) {
         LOG.error(e.getMessage(), e);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
     @ExceptionHandler({FacultyAlreadyExistException.class})
-    public ResponseEntity<?> handleBadRequest(RuntimeException e) {
+    public ResponseEntity<?> handleBadRequest(FacultyAlreadyExistException e) {
         LOG.error(e.getMessage(), e);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
