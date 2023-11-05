@@ -65,6 +65,16 @@ public class StudentController {
         return studentService.getLastStudents(amount);
     }
 
+    @GetMapping("name-start-with-a")
+    public Collection<String> getStudentsWhereNameStartsWithA() {
+        return studentService.getStudentsWhereNameStartsWithA();
+    }
+
+    @GetMapping("average-age2")
+    public Double getAverageAgeOfStudents2() {
+        return studentService.calculateAverageAge2();
+    }
+
     @PutMapping("{id}")
     public StudentDtoOut editStudent(@PathVariable Long id, @RequestBody StudentDtoIn studentDtoIn) {
         return studentService.editStudent(id, studentDtoIn);

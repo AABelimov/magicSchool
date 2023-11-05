@@ -115,4 +115,19 @@ public class StudentService {
                 .map(studentMapper::toDto)
                 .toList();
     }
+
+    public Collection<String> getStudentsWhereNameStartsWithA() {
+        return studentRepository.findAll().stream()
+                .map(e -> e.getName().toUpperCase())
+                .filter(name -> name.startsWith("A"))
+                .sorted()
+                .toList();
+    }
+
+    public Double calculateAverageAge2() {
+        return studentRepository.findAll().stream()
+                .mapToDouble(Student::getAge)
+                .average()
+                .orElse(0);
+    }
 }
