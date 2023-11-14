@@ -51,13 +51,13 @@ public class FacultyConstantsForTests {
     public static final Collection<FacultyDtoOut> ALL_FACULTY_DTO_OUT_AFTER_EDIT = new ArrayList<>(List.of(
             FACULTY_DTO_OUT_1,
             FACULTY_DTO_OUT_2,
-            FACULTY_DTO_OUT_4,
-            FACULTY_DTO_OUT_3_EDIT
+            FACULTY_DTO_OUT_3_EDIT,
+            FACULTY_DTO_OUT_4
     ));
     public static final Collection<FacultyDtoOut> ALL_FACULTY_DTO_OUT_AFTER_REMOVE = new ArrayList<>(List.of(
             FACULTY_DTO_OUT_1,
-            FACULTY_DTO_OUT_4,
-            FACULTY_DTO_OUT_3_EDIT
+            FACULTY_DTO_OUT_3_EDIT,
+            FACULTY_DTO_OUT_4
     ));
     public static final List<Faculty> ALL_FACULTIES = new ArrayList<>(List.of(
             FACULTY_1,
